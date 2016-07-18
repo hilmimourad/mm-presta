@@ -106,4 +106,13 @@ public class Utilisateur implements Serializable{
     public int hashCode() {
         return getUsername().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Utilisateur{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

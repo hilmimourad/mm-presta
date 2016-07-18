@@ -62,4 +62,13 @@ public class TypeCaracteristiqueProduit implements Serializable {
     public int hashCode() {
         return (int) (getId() ^ (getId() >>> 32));
     }
+
+    @Override
+    public String toString() {
+        return "TypeCaracteristiqueProduit{" +
+                "id=" + id +
+                ", libelle='" + libelle + '\'' +
+                '}';
+    }
 }
+

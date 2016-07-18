@@ -101,4 +101,16 @@ public class FamillePrestation implements Serializable {
         result = 31 * result + (int) (getId() ^ (getId() >>> 32));
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "FamillePrestation{" +
+                "code='" + code + '\'' +
+                ", id=" + id +
+                ", libelle='" + libelle + '\'' +
+                ", famillemere=" + famillemere +
+                ", listeSousFamille=" + listeSousFamille +
+                ", listeProduit=" + listeProduit +
+                '}';
+    }
 }

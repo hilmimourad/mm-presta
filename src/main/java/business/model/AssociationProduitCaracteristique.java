@@ -109,8 +109,18 @@ public class AssociationProduitCaracteristique implements Serializable{
 		AssociationProduitCaracteristique other = (AssociationProduitCaracteristique) obj;
         return id==other.id;
 	}
-	
-	
-	
 
+
+    @Override
+    public String toString() {
+        return "AssociationProduitCaracteristique{" +
+                "id=" + id +
+                ", valeurMax=" + valeurMax +
+                ", valeurMin=" + valeurMin +
+                ", valeurDefaut=" + valeurDefaut +
+                ", tarif=" + tarif +
+                ", produit=" + produit +
+                ", caracteristiqueProduit=" + caracteristiqueProduit +
+                '}';
+    }
 }

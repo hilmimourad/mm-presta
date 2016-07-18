@@ -36,7 +36,7 @@ public class Produit implements Serializable{
     public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -86,5 +86,16 @@ public class Produit implements Serializable{
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
+    public String toString() {
+        return "Produit{" +
+                "id=" + id +
+                ", libelle='" + libelle + '\'' +
+                ", description='" + description + '\'' +
+                ", famille=" + famille +
+                ", listAssociationProduitCaracteristique=" + listAssociationProduitCaracteristique +
+                '}';
     }
 }

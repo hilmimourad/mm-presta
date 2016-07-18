@@ -33,9 +33,9 @@ public class CaracteristiqueProduit implements Serializable{
 	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
     @Column
 	public String getLibelle() {
@@ -75,5 +75,15 @@ public class CaracteristiqueProduit implements Serializable{
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
+    public String toString() {
+        return "CaracteristiqueProduit{" +
+                "id=" + id +
+                ", libelle='" + libelle + '\'' +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                '}';
     }
 }
