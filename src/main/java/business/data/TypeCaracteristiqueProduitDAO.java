@@ -49,17 +49,22 @@ public abstract class TypeCaracteristiqueProduitDAO {
      * @see String
      */
     public static String updateTypeCaracteristiqueProduit (TypeCaracteristiqueProduit TCP){
+        String result = null;
         try {
             DAO.getEntityManager().getTransaction().begin();
             TypeCaracteristiqueProduit TCPU = DAO.getEntityManager().find(TypeCaracteristiqueProduit.class,TCP.getId());
-            TCPU.setLibelle(TCP.getLibelle());
-            DAO.getEntityManager().persist(TCPU);
+            if(TCPU != null){
+                 TCPU.setLibelle(TCP.getLibelle());
+                 DAO.getEntityManager().persist(TCPU);
+                 result = TCPU.getId()+"";
+            }
             DAO.getEntityManager().getTransaction().commit();
-            return TCPU.getId()+"";
         } catch (Exception e) {
+            result = null;
             DAO.getEntityManager().getTransaction().rollback();
             ExceptionHandler.handleException("Exception while updating TypeCaracteristiqueProduit",e);
-            return null;		}
+        }
+        return result;
     }
 
     /**
