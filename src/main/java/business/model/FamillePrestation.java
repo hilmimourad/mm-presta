@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * <h1>Une famille de préstations</h1>
  * <p>Cette représente une famille de prestations qui peut posséder des sous familles de préstations</p>
- * </p>
+ *
  *<b>Note:</b> Cette classes est une entité dans la base des données, et peut être convertie en objet JSON
  *
  * @author  Salim Dahiry

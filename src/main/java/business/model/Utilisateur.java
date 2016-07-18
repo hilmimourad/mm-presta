@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * <h1>Un utilisateur de l'application</h1>
  * <p>Cette classe représente un utilisateur de l'application</p>
- * </p>
+ *
  *<b>Note:</b> Cette classes est une entité dans la base des données, et peut être convertie en objet JSON
  *
  * @author  Salim Dahiry
@@ -83,7 +83,8 @@ public class Utilisateur implements Serializable{
 
     /**
      * Cette méthode permet de récupérer un String correspondant au role de l'utilisateur.
-     * @return String nom du role de l'utilisateur
+     * @return   nom du role de l'utilisateur
+     * @see String
      */
     @Transient
     public String getRoleName(){

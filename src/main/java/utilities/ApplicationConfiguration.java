@@ -1,6 +1,7 @@
 package utilities;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,7 @@ import java.util.Properties;
  */
 public class ApplicationConfiguration {
 
+    private static ApplicationConfiguration _INSTANCE = null;
     private HashMap<String,String> properties = new HashMap<String, String>();
     private String propFileName = "mm-presta.properties";
 
@@ -57,6 +59,16 @@ public class ApplicationConfiguration {
     }
 
     /**
+     * Cette méthode permet de récuperer l'instance unique de la classe ApplicationConfiguration.
+     * @return   l'instance unique de la classe
+     */
+    public static ApplicationConfiguration getInstance(){
+        if(_INSTANCE!=null) return _INSTANCE;
+        _INSTANCE = new ApplicationConfiguration();
+        return _INSTANCE;
+    }
+
+    /**
      * Cette méthode permet de récuperer l'ensemble des pairs de paramètres
      * @return HashMap(String,String) Elle retourne une Map de paramètres (clé,valeur),de type String pour les deux.
      */
@@ -77,15 +89,5 @@ public class ApplicationConfiguration {
         } catch (Exception e) {
             ExceptionHandler.handleException("Exception occurred in Application configuration to set a property",e);
         }
-    }
-
-    private static ApplicationConfiguration _INSTANCE = null;
-    /**
-     * Cette méthode permet de récuperer l'instance unique de la classe ApplicationConfiguration.
-     */
-    public static ApplicationConfiguration getInstance(){
-        if(_INSTANCE!=null) return _INSTANCE;
-        _INSTANCE = new ApplicationConfiguration();
-        return _INSTANCE;
     }
 }

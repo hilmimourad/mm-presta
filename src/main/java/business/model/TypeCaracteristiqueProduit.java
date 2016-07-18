@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * <h1>Type d'une caracteristique de produit</h1>
  * <p>Cette classe représente le type d'une caractéristique de produit</p>
- * </p>
+ *
  *<b>Note:</b> Cette classes est une entité dans la base des données, et peut être convertie en objet JSON
  *
  * @author  Salim Dahiry

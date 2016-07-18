@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * <h1>Un produit ou service</h1>
  * <p>Cette représente l'association un produit appartenant à une famille de préstations</p>
- * </p>
+ *
  *<b>Note:</b> Cette classes est une entité dans la base des données, et peut être convertie en objet JSON
  *
  * @author  Salim Dahiry

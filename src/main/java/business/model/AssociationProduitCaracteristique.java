@@ -9,7 +9,7 @@ import java.io.Serializable;
  * <h1>Association entre un produit et une caracteristique</h1>
  * <p>Cette classe représente l'association entre un produit et une caraceristique tout en précisant
  * des informations additionnelles liées au produit en question</p>
- * </p>
+ *
  *<b>Note:</b> Cette classes est une entité dans la base des données, et peut être convertie en objet JSON
  *
  * @author  Salim Dahiry
