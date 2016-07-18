@@ -2,7 +2,10 @@ package business.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,11 +56,9 @@ public class Utilisateur implements Serializable{
     }
 
     @Id
-    @GeneratedValue
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -66,7 +67,6 @@ public class Utilisateur implements Serializable{
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -75,7 +75,6 @@ public class Utilisateur implements Serializable{
     public int getRole() {
         return role;
     }
-
     public void setRole(int role) {
         this.role = role==_ADMIN || role==_USER ? role:_USER;
         this.role = role;
@@ -91,6 +90,7 @@ public class Utilisateur implements Serializable{
         return _ROLES.get(role);
      }
 
+    @Transient
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,11 +102,13 @@ public class Utilisateur implements Serializable{
 
     }
 
+    @Transient
     @Override
     public int hashCode() {
         return getUsername().hashCode();
     }
 
+    @Transient
     @Override
     public String toString() {
         return "Utilisateur{" +
