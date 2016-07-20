@@ -35,8 +35,7 @@ public class UtilisateurService {
     public String getAll(HttpServletRequest request){
         ObjectMapper om = new ObjectMapper();
         try {
-            //return om.writeValueAsString(UtilisateurDAO.getAll());
-            return request.getAttribute("utilisateur").toString();
+            return om.writeValueAsString(UtilisateurDAO.getAll());
         } catch (Exception e) {
             ExceptionHandler.handleException("Exception while parsing list of Utilisateur to JSON",e);
         }

@@ -55,7 +55,9 @@ public class UtilisateursOpenService
         }
 
         ResponseEntity re = new ResponseEntity("connected", HttpStatus.OK);
-        response.addCookie(new Cookie(JWTService.getHeaderName(),JWTService.generateToken(uj)));
+        Cookie c = new Cookie(JWTService.getHeaderName(),JWTService.generateToken(uj));
+        c.setMaxAge(5*60*60);//5 hours
+        response.addCookie(c);
 
         return re;
     }
