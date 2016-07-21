@@ -1,6 +1,7 @@
 package business.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,9 +29,10 @@ public class FamillePrestation implements Serializable {
     private long id;
     private String libelle;
     private FamillePrestation famillemere;
+
+    @JsonIgnore
     private List<FamillePrestation> listeSousFamille = new ArrayList<FamillePrestation>();
     private List<Produit> listeProduit = new ArrayList<Produit>();
-
     public FamillePrestation() {
         super();
     }

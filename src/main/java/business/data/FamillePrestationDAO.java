@@ -120,6 +120,20 @@ public abstract class FamillePrestationDAO {
 	    }
 	}
 
+	/**
+	 * Cette méthode permet de récupérer tous les objets FamillePrestation de la base de données qui n'ont pas de famille mère.
+	 * @return   List des tous les objets, null en cas d'erreur.
+	 * @see List
+	 */
+	public synchronized static List<FamillePrestation> getAllSuper(){
+		try {
+			return DAO.getEntityManager().createQuery("select FP from FamillePrestation FP where FP.famillemere is null").getResultList();
+		} catch (Exception e) {
+			ExceptionHandler.handleException("Exception while fetching all super objects",e);
+			return null;
+		}
+	}
+
     /**
      * Cette méthode permet de récupérer un objet FamillePrestation de la base de données par son code.
      * @param Code String l'ID de l'objet à récupérer

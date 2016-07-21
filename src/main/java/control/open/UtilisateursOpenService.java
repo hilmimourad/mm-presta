@@ -58,7 +58,6 @@ public class UtilisateursOpenService
         Cookie c = new Cookie(JWTService.getHeaderName(),JWTService.generateToken(uj));
         c.setMaxAge(5*60*60);//5 hours
         response.addCookie(c);
-
         return re;
     }
 }

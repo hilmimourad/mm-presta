@@ -30,20 +30,17 @@ public class AuthentificationInterceptor implements HandlerInterceptor{
         Cookie auth = null;
         for(Cookie c :httpServletRequest.getCookies()){
             if(c.getName().equals(JWTService.getHeaderName())){
-                System.out.println();
-                System.out.println("Gotcha!!!!!!  "+c.getValue());
-                System.out.println();
                 auth = c;
                 break;
             }
         }
-
 
         if (auth==null){
             httpServletResponse.setContentType("text/plain");
             httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,"no auth");
             return false;
         }
+
         String uj = null;
         try{
             uj = JWTService.parseToken(auth.getValue());
