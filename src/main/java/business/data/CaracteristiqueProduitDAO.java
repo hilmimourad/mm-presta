@@ -116,6 +116,22 @@ public abstract class CaracteristiqueProduitDAO {
 	    }
 	}
 
+	/**
+	 * Cette méthode permet de récupérer tous les objets CaracteristiqueProduit de la base de données d'un type de caracteristiques.
+	 * @return   List des tous les objets, null en cas d'erreur.
+	 * @see List
+	 */
+	public synchronized static List<CaracteristiqueProduit> getAllOfType(long id){
+		try {
+            Query query = DAO.getEntityManager().createQuery("select cp from CaracteristiqueProduit cp where cp.type.id = :id");
+            query.setParameter("id",id);
+			return query.getResultList();
+		} catch (Exception e) {
+			ExceptionHandler.handleException("Exception while fetching all CaracteristiqueProduit of Type",e);
+			return null;
+		}
+	}
+
     /**
      * Cette méthode permet de récupérer un objet de type CaracteristiqueProduit de la base de données par son nom.
      * @return   Objet à récupérer, null en cas de non existence ou erreur.

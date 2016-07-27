@@ -1,7 +1,7 @@
 package control.open;
 
-import business.data.FamillePrestationDAO;
-import business.model.FamillePrestation;
+import business.data.ProduitDAO;
+import business.model.Produit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,20 +17,20 @@ import java.util.List;
 
 
 /**
- * <h1>Controleur Spring Rest pour gérer les familles des préstations(Version Open au public sans Authentification)</h1>
- * <p>Ce controleur offre un ensemble de fonctionnalités pour gérer les familles de préstations</p>
+ * <h1>Controleur Spring Rest pour gérer les produits ou services(Version Open au public sans Authentification)</h1>
+ * <p>Ce controleur offre un ensemble de fonctionnalités pour gérer les produits ou services</p>
  * <b>Nécessite authentification ?</b> NON
  * @author  Mourad Hilmi
  * @version 1.0
- * @since   2016-07-19
+ * @since   2016-07-21
  *
  */
 @RestController
-@RequestMapping("/open/famillesPrestation")
-public class FamillesPrestation {
+@RequestMapping("/open/produits")
+public class Produits {
 
     /**
-     * Cette méthode permet de récuperer toutes la familles et sous familles
+     * Cette méthode permet de récuperer touts les produits
      * @return   réponse Json
      */
     @RequestMapping(value = "/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,16 +39,16 @@ public class FamillesPrestation {
     }
 
     /**
-     * Cette méthode permet de récuperer toutes la familles mères seulements
+     * Cette méthode permet de récuperer tous les produits d'une famille
      * @return   réponse Json
      */
-    @RequestMapping(value = "/meres/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getAllSuper(){
-        return getService(_SUPERS,null);
+    @RequestMapping(value = "/{famille}/famille/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getAllSuper(@PathVariable("famille")String famille){
+        return getService(_ALL_OF_FAMILLE,famille);
     }
 
     /**
-     * Cette méthode permet de récuperer une famille par ID
+     * Cette méthode permet de récuperer un produit par ID
      * @return   réponse Json
      */
     @RequestMapping(value = "/{id}/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,14 +56,6 @@ public class FamillesPrestation {
         return getService(_ONE_BY_ID,id);
     }
 
-    /**
-     * Cette méthode permet de récuperer une famille par Code
-     * @return   réponse Json
-     */
-    @RequestMapping(value = "/{code}/code/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getOneByCode(@PathVariable("code")String code){
-        return getService(_ONE_BY_CODE,code);
-    }
 
 
     /**
@@ -78,40 +70,38 @@ public class FamillesPrestation {
      * la méthode
      */
     private ResponseEntity<String> getService(int style,String value){
-        List<FamillePrestation> listFamilles = null;
-        FamillePrestation fp = null;
+        List<Produit> listProduits = null;
+        Produit p = null;
         ObjectMapper om = new ObjectMapper();
         try{
-            if(style == _ALL || style==_SUPERS){
-                listFamilles = style == _ALL ? FamillePrestationDAO.getAll() : FamillePrestationDAO.getAllSuper();
+            if(style == _ALL || style==_ALL_OF_FAMILLE){
+                listProduits = style == _ALL ? ProduitDAO.getAll() : ProduitDAO.getAllOfFamille(value);
             }
-            else if(style==_ONE_BY_CODE || style == _ONE_BY_ID){
-                fp  = style==_ONE_BY_ID ? FamillePrestationDAO.getFamillePrestation(Long.parseLong(value)):FamillePrestationDAO.find(value);
+            else if(style == _ONE_BY_ID){
+                p = ProduitDAO.getProduit(Long.parseLong(value));
             }
             else{
                 throw new IllegalArgumentException();
             }
-            if((listFamilles==null && (style==_ALL || style==_SUPERS))){
+            if((listProduits==null && (style==_ALL || style==_ALL_OF_FAMILLE))){
                 HashMap<String,String> error = new HashMap<String, String>();
                 error.put("reason","database exception");
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(om.writeValueAsString(error));
             }
-            if(fp==null&& (style==_ONE_BY_CODE || style==_ONE_BY_ID)){
+            if(p==null&& (style==_ONE_BY_ID)){
                 return ResponseEntity.ok(null);
             }
-            return ResponseEntity.ok(om.writeValueAsString(style==_ALL || style == _SUPERS ? listFamilles:fp));
+            return ResponseEntity.ok(om.writeValueAsString(style==_ALL || style == _ALL_OF_FAMILLE ? listProduits:p));
         }catch (Exception e){
-            ExceptionHandler.handleException("unkown exception at open/FamillesPrestation::getService",e);
+            ExceptionHandler.handleException("unkown exception at open/Produits::getService",e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"reason\":\"unkown exception\"}exception");
         }
     }
 
 
-
     private static final int _ALL = 1;
-    private static final int _SUPERS = 2;
+    private static final int _ALL_OF_FAMILLE = 2;
     private static final int _ONE_BY_ID=3;
-    private static final int _ONE_BY_CODE=4;
 
 
 }

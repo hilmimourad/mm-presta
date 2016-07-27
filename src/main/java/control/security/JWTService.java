@@ -1,4 +1,4 @@
-package utilities;
+package control.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

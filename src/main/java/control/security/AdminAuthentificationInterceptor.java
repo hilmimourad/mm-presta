@@ -6,25 +6,15 @@ import io.jsonwebtoken.SignatureException;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import utilities.ExceptionHandler;
-import utilities.JWTService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * <h1>Intercepteur de requêtes pour vérifier l'authentification de l'Utilisateur</h1>
- * <p>Cette classe est un intercepteur de requêtes HTTP qui vérifie l'authentification de l'Utilisateur
- * avant d'autoriser l'accès au service demandé. L'authentification se fait en utilisant la méthode JWT (Json Web Token)</p>
- *
- *
- * @author  Mourad Hilmi
- * @version 1.0
- * @since   2016-07-19
- *
- * @see org.springframework.web.servlet.HandlerInterceptor;
+ * Created by mourad on 7/27/2016.
  */
-public class AuthentificationInterceptor implements HandlerInterceptor{
+public class AdminAuthentificationInterceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         Cookie auth = null;
@@ -33,6 +23,16 @@ public class AuthentificationInterceptor implements HandlerInterceptor{
                 auth = c;
                 break;
             }
+        }
+
+
+        String[] urlParts = httpServletRequest.getContextPath().split("[/]");
+
+
+        int i=0;
+        for(String s :urlParts){
+            System.out.println(i+"===="+s);
+            i++;
         }
 
         if (auth==null){

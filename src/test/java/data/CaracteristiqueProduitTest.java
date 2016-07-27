@@ -68,4 +68,30 @@ public class CaracteristiqueProduitTest {
         /**DELETING SETUP**/
         Assert.assertTrue(TypeCaracteristiqueProduitDAO.deleteTypeCaracteristiqueProduit(tcp.getId()));
     }
+
+    @Test
+    public void initDatabase(){
+        TypeCaracteristiqueProduit tc1 = new TypeCaracteristiqueProduit();
+        tc1.setLibelle("TypeCar1");
+        TypeCaracteristiqueProduitDAO.insertTypeCaracteristiqueProduit(tc1);
+
+        TypeCaracteristiqueProduit tc2 = new TypeCaracteristiqueProduit();
+        tc2.setLibelle("TypeCar2");
+        TypeCaracteristiqueProduitDAO.insertTypeCaracteristiqueProduit(tc2);
+
+
+        CaracteristiqueProduit cp1 = new CaracteristiqueProduit();
+        cp1.setLibelle("carac11");
+        cp1.setDescription("Description carac11");
+        cp1.setType(tc1);
+
+        CaracteristiqueProduit cp2 = new CaracteristiqueProduit();
+        cp2.setLibelle("carac12");
+        cp2.setDescription("Description carac12");
+        cp2.setType(tc1);
+
+        CaracteristiqueProduitDAO.insertCaracteristiqueProduit(cp1);
+        CaracteristiqueProduitDAO.insertCaracteristiqueProduit(cp2);
+    }
+
 }

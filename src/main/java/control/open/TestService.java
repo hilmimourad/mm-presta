@@ -26,7 +26,7 @@ class TestService {
      * Cette méthode est accessible via "${serviceUrl}/test/run", et permet de tester si le serveur des services est opérationnel
      * @return   Un message dont le Media Type est <b>TEXT/PLAIN</b>
      */
-    @RequestMapping(value="/run",method = RequestMethod.GET,produces = MediaType.TEXT_PLAIN_VALUE)
+    @RequestMapping(value="/run.do",method = RequestMethod.GET,produces = MediaType.TEXT_PLAIN_VALUE)
     public String test(HttpServletRequest request, HttpServletResponse response){
 
         return "Services are up & running [^_^]";

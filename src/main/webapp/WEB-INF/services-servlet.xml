@@ -22,14 +22,13 @@
         <mvc:mapping path="/**" />
     </mvc:cors>
 
+    <!--
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/open/**"/>
-            <bean class="control.security.AuthentificationInterceptor" />
+            <bean class="control.security.AdminAuthentificationInterceptor" />
         </mvc:interceptor>
-    </mvc:interceptors>
-
+    </mvc:interceptors>-->
     <mvc:annotation-driven/>
 
 </beans>

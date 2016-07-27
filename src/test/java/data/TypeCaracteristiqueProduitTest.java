@@ -49,4 +49,21 @@ public class TypeCaracteristiqueProduitTest {
         Assert.assertTrue(TypeCaracteristiqueProduitDAO.deleteTypeCaracteristiqueProduit(tpc.getId()));
 
     }
+
+    @Test
+    public void initDatabase(){
+
+        TypeCaracteristiqueProduit tc1 = new TypeCaracteristiqueProduit();
+        tc1.setLibelle("type1");
+        TypeCaracteristiqueProduitDAO.insertTypeCaracteristiqueProduit(tc1);
+
+        TypeCaracteristiqueProduit tc2 = new TypeCaracteristiqueProduit();
+        tc2.setLibelle("type2");
+        TypeCaracteristiqueProduitDAO.insertTypeCaracteristiqueProduit(tc2);
+
+        TypeCaracteristiqueProduit tc3 = new TypeCaracteristiqueProduit();
+        tc3.setLibelle("type3");
+        TypeCaracteristiqueProduitDAO.insertTypeCaracteristiqueProduit(tc3);
+
+    }
 }

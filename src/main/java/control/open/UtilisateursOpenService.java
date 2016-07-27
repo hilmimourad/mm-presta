@@ -5,6 +5,7 @@ import business.model.AuthCredentials;
 import business.model.Utilisateur;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import control.security.JWTService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import utilities.Encryptor;
 import utilities.ExceptionHandler;
-import utilities.JWTService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

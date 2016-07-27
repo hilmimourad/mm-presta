@@ -116,6 +116,23 @@ public abstract class ProduitDAO {
 	    }
 	}
 
+	/**
+	 * Cette méthode permet de récupérer tous les objets Produit d'une famille de la base de données.
+	 * @param   famille l'ID de la famille en question
+	 * @return   List des tous les objets, null en cas d'erreur.
+	 * @see List
+	 */
+	public synchronized static List<Produit> getAllOfFamille(String famille){
+		try {
+			Query query = DAO.getEntityManager().createQuery("select P from Produit P where P.famille.id = :id",Produit.class);
+			query.setParameter("id",famille);
+			return query.getResultList();
+		} catch (Exception e) {
+			ExceptionHandler.handleException("Exception while fetching all Produit of Famille",e);
+			return null;
+		}
+	}
+
 
     /**
      * Cette méthode permet de récupérer les objets Produit de la base de données par nom.
