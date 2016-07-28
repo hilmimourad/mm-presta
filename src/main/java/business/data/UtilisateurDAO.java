@@ -46,7 +46,7 @@ public abstract class UtilisateurDAO {
      * @return   l'ID de l'objet mis à jour en cas de succès, null en cas d'erreur.
      * @see String
      */
-    public static String UpdateUtilisateur (Utilisateur U){
+    public static String updateUtilisateur (Utilisateur U){
         try {
             DAO.getEntityManager().getTransaction().begin();
             Utilisateur UU = DAO.getEntityManager().find(Utilisateur.class,U.getUsername());

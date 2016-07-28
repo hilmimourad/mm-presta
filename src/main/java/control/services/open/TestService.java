@@ -1,4 +1,4 @@
-package control.open;
+package control.services.open;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/test")
 class TestService {
-
 
     /**
      * Cette méthode est accessible via "${serviceUrl}/test/run", et permet de tester si le serveur des services est opérationnel

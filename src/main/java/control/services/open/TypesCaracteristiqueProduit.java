@@ -1,7 +1,7 @@
-package control.open;
+package control.services.open;
 
-import business.data.FamillePrestationDAO;
-import business.model.FamillePrestation;
+import business.data.TypeCaracteristiqueProduitDAO;
+import business.model.TypeCaracteristiqueProduit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,22 +15,21 @@ import utilities.ExceptionHandler;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
- * <h1>Controleur Spring Rest pour gérer les familles des préstations(Version Open au public sans Authentification)</h1>
- * <p>Ce controleur offre un ensemble de fonctionnalités pour gérer les familles de préstations</p>
+ * <h1>Controleur Spring Rest pour gérer les types des caracteristiques des produits(Version Open au public sans Authentification)</h1>
+ * <p>Ce controleur offre un ensemble de fonctionnalités pour gérer les types des caracteristiques des produits </p>
  * <b>Nécessite authentification ?</b> NON
  * @author  Mourad Hilmi
  * @version 1.0
- * @since   2016-07-19
+ * @since   2016-07-20
  *
  */
 @RestController
-@RequestMapping("/open/famillesPrestation")
-public class FamillesPrestation {
+@RequestMapping("/open/typesCaracteristiqueProduit")
+public class TypesCaracteristiqueProduit {
 
     /**
-     * Cette méthode permet de récuperer toutes la familles et sous familles
+     * Cette méthode permet de récuperer touts les types
      * @return   réponse Json
      */
     @RequestMapping(value = "/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,16 +38,7 @@ public class FamillesPrestation {
     }
 
     /**
-     * Cette méthode permet de récuperer toutes la familles mères seulements
-     * @return   réponse Json
-     */
-    @RequestMapping(value = "/meres/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getAllSuper(){
-        return getService(_SUPERS,null);
-    }
-
-    /**
-     * Cette méthode permet de récuperer une famille par ID
+     * Cette méthode permet de récuperer un type par ID
      * @return   réponse Json
      */
     @RequestMapping(value = "/{id}/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,12 +47,12 @@ public class FamillesPrestation {
     }
 
     /**
-     * Cette méthode permet de récuperer une famille par Code
+     * Cette méthode permet de récuperer un type par libelle
      * @return   réponse Json
      */
-    @RequestMapping(value = "/{code}/code/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getOneByCode(@PathVariable("code")String code){
-        return getService(_ONE_BY_CODE,code);
+    @RequestMapping(value = "/{libelle}/libelle/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getOneByLibelle(@PathVariable("libelle")String libelle){
+        return getService(_ONE_BY_LIBELLE,libelle);
     }
 
 
@@ -78,40 +68,37 @@ public class FamillesPrestation {
      * la méthode
      */
     private ResponseEntity<String> getService(int style,String value){
-        List<FamillePrestation> listFamilles = null;
-        FamillePrestation fp = null;
+        List<TypeCaracteristiqueProduit> listTypes = null;
+        TypeCaracteristiqueProduit tc = null;
         ObjectMapper om = new ObjectMapper();
         try{
-            if(style == _ALL || style==_SUPERS){
-                listFamilles = style == _ALL ? FamillePrestationDAO.getAll() : FamillePrestationDAO.getAllSuper();
+            if(style == _ALL){
+                listTypes = TypeCaracteristiqueProduitDAO.getAll();
             }
-            else if(style==_ONE_BY_CODE || style == _ONE_BY_ID){
-                fp  = style==_ONE_BY_ID ? FamillePrestationDAO.getFamillePrestation(Long.parseLong(value)):FamillePrestationDAO.find(value);
+            else if(style == _ONE_BY_ID || style == _ONE_BY_LIBELLE){
+                tc  = style==_ONE_BY_ID ? TypeCaracteristiqueProduitDAO.getTypeCaracteristiqueProduit(Long.parseLong(value)):TypeCaracteristiqueProduitDAO.find(value);
             }
             else{
                 throw new IllegalArgumentException();
             }
-            if((listFamilles==null && (style==_ALL || style==_SUPERS))){
+            if(listTypes==null && style==_ALL){
                 HashMap<String,String> error = new HashMap<String, String>();
                 error.put("reason","database exception");
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(om.writeValueAsString(error));
             }
-            if(fp==null&& (style==_ONE_BY_CODE || style==_ONE_BY_ID)){
+            if(tc==null&& (style==_ONE_BY_LIBELLE || style==_ONE_BY_ID)){
+                HashMap<String,String> error = new HashMap<String, String>();
+                error.put("reason","no data found");
                 return ResponseEntity.ok(null);
             }
-            return ResponseEntity.ok(om.writeValueAsString(style==_ALL || style == _SUPERS ? listFamilles:fp));
+            return ResponseEntity.ok(om.writeValueAsString(style==_ALL? listTypes:tc));
         }catch (Exception e){
-            ExceptionHandler.handleException("unkown exception at open/FamillesPrestation::getService",e);
+            ExceptionHandler.handleException("unkown exception at open/TypesCaracteristiqueProduit::getService",e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"reason\":\"unkown exception\"}exception");
         }
     }
 
-
-
     private static final int _ALL = 1;
-    private static final int _SUPERS = 2;
+    private static final int _ONE_BY_LIBELLE=2;
     private static final int _ONE_BY_ID=3;
-    private static final int _ONE_BY_CODE=4;
-
-
 }

@@ -46,6 +46,9 @@ public class Utilisateur implements Serializable{
         _ROLES.put(_USER,  "Utilisateur");
     }
 
+
+
+
     private String username;
     @JsonIgnore
     private String password;

@@ -30,9 +30,9 @@ public class UtilisateurTest {
 
         /**TEST UPDATING**/
         u.setRole(Utilisateur._USER);
-        Assert.assertNotNull(UtilisateurDAO.UpdateUtilisateur(u));
+        Assert.assertNotNull(UtilisateurDAO.updateUtilisateur(u));
 
-        Assert.assertNull(UtilisateurDAO.UpdateUtilisateur(u2));
+        Assert.assertNull(UtilisateurDAO.updateUtilisateur(u2));
 
         /**TEST FETCHING**/
         u2 = UtilisateurDAO.getUtilisateur(u.getUsername());

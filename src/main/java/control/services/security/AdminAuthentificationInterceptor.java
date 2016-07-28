@@ -1,4 +1,4 @@
-package control.security;
+package control.services.security;
 
 import business.model.Utilisateur;
 import com.fasterxml.jackson.databind.ObjectMapper;

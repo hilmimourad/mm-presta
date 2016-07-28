@@ -1,4 +1,4 @@
-package control.open;
+package control.services.open;
 
 import business.data.ProduitDAO;
 import business.model.Produit;

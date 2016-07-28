@@ -1,11 +1,11 @@
-package control.open;
+package control.services.open;
 
 import business.data.UtilisateurDAO;
 import business.model.AuthCredentials;
 import business.model.Utilisateur;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import control.security.JWTService;
+import control.services.security.JWTService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -60,4 +60,22 @@ public class UtilisateursOpenService
         response.addCookie(c);
         return re;
     }
+
+
+    /**
+     * Cette méthode permet de récuperer touts les roles possibles pour un utilisateur
+     * @return   réponse Json
+     */
+    @RequestMapping(value = "/roles/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getAll(){
+        ObjectMapper om  = new ObjectMapper();
+        try {
+            return ResponseEntity.ok(om.writeValueAsString(Utilisateur._ROLES));
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("\"message\":\"Ops! Quelque chose a mal passé\"");
+        }
+
+    }
+
+
 }

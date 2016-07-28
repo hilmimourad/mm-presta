@@ -1,4 +1,4 @@
-package control.security;
+package control.services.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
