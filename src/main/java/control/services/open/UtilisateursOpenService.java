@@ -6,6 +6,7 @@ import business.model.Utilisateur;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import control.services.security.JWTService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import utilities.Encryptor;
 import utilities.ExceptionHandler;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,15 +35,18 @@ public class UtilisateursOpenService
 {
     @RequestMapping(value = "/login.do",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity login(@RequestBody AuthCredentials credentials, HttpServletRequest request, HttpServletResponse response){
+        System.out.println("in");
         if(credentials==null) return new ResponseEntity("no data", HttpStatus.NO_CONTENT);
         if(credentials.getUsername()==null || credentials.getPassword()==null) return new ResponseEntity("no data", HttpStatus.BAD_REQUEST);
         if(credentials.getUsername().trim().equals("") || credentials.getPassword().trim().equals("")) return new ResponseEntity("no data", HttpStatus.BAD_REQUEST);
 
         Utilisateur u = UtilisateurDAO.getUtilisateur(credentials.getUsername());
 
-        if(u==null) return new ResponseEntity("no user", HttpStatus.UNAUTHORIZED);
 
-        if(!u.getPassword().equals(Encryptor.encrypte(credentials.getPassword()))) return new ResponseEntity("no user", HttpStatus.UNAUTHORIZED);
+        if(u==null) return new ResponseEntity("", HttpStatus.UNAUTHORIZED);
+
+        if(!u.getPassword().equals(Encryptor.encrypte(credentials.getPassword()))) return new ResponseEntity("", HttpStatus.UNAUTHORIZED);
+
 
         String uj  = null;
         ObjectMapper om = new ObjectMapper();
@@ -51,14 +54,13 @@ public class UtilisateursOpenService
             uj = om.writeValueAsString(u);
         } catch (JsonProcessingException e) {
             ExceptionHandler.handleException("Error while parsing Utilisateur to Json at UtilisateurService::login",e);
-            return new ResponseEntity("exception", HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
         }
 
-        ResponseEntity re = new ResponseEntity("connected", HttpStatus.OK);
-        Cookie c = new Cookie(JWTService.getHeaderName(),JWTService.generateToken(uj));
-        c.setMaxAge(5*60*60);//5 hours
-        response.addCookie(c);
-        return re;
+       // ResponseEntity re = ResponseEntity.ok("");
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set(JWTService.getHeaderName(),JWTService.generateToken(uj));
+        return new ResponseEntity<String>(JWTService.generateToken(uj), responseHeaders, HttpStatus.OK);
     }
 
 

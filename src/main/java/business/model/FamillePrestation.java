@@ -29,7 +29,6 @@ public class FamillePrestation implements Serializable {
     private long id;
     private String libelle;
     private FamillePrestation famillemere;
-
     @JsonIgnore
     private List<FamillePrestation> listeSousFamille = new ArrayList<FamillePrestation>();
     private List<Produit> listeProduit = new ArrayList<Produit>();
@@ -63,7 +62,7 @@ public class FamillePrestation implements Serializable {
         this.libelle = libelle;
     }
 
-    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.DETACH},fetch = FetchType.EAGER)
     public FamillePrestation getFamillemere() {
         return famillemere;
     }
@@ -71,7 +70,7 @@ public class FamillePrestation implements Serializable {
         this.famillemere = famillemere;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER,mappedBy = "famillemere")
     public List<FamillePrestation> getListeSousFamille() {
         return listeSousFamille;
     }
@@ -80,6 +79,7 @@ public class FamillePrestation implements Serializable {
     }
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn
     public List<Produit> getListeProduit() {
         return listeProduit;
     }

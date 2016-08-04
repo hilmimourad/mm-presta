@@ -14,6 +14,7 @@ import utilities.ExceptionHandler;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,7 +31,7 @@ import java.util.List;
 public class FamillesPrestation {
 
     /**
-     * Cette méthode permet de récuperer toutes la familles et sous familles
+     * Cette méthode permet de récuperer toutes les familles
      * @return   réponse Json
      */
     @RequestMapping(value = "/action.do",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -97,15 +98,22 @@ public class FamillesPrestation {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(om.writeValueAsString(error));
             }
             if(fp==null&& (style==_ONE_BY_CODE || style==_ONE_BY_ID)){
-                return ResponseEntity.ok(null);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("{\"error\":\"no resource\"}");
             }
-            return ResponseEntity.ok(om.writeValueAsString(style==_ALL || style == _SUPERS ? listFamilles:fp));
+            if(style==_ALL || style == _SUPERS){
+                return ResponseEntity.ok(om.writeValueAsString(listFamilles));
+            }else {
+                Map<String,Object> map = new HashMap<String, Object>();
+                map.put("famille",fp);
+                map.put("sousFamilles",fp.getListeSousFamille());
+                return ResponseEntity.ok(om.writeValueAsString(map));
+            }
+
         }catch (Exception e){
             ExceptionHandler.handleException("unkown exception at open/FamillesPrestation::getService",e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"reason\":\"unkown exception\"}exception");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"unkown exception\"}");
         }
     }
-
 
 
     private static final int _ALL = 1;

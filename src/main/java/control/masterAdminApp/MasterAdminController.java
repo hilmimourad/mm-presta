@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import utilities.Encryptor;
 import utilities.MasterAdmin;
 
 import javax.servlet.http.HttpServletRequest;
@@ -136,7 +137,7 @@ public class MasterAdminController {
 
         Utilisateur u = new Utilisateur();
         u.setUsername(username);
-        u.setPassword(password);
+        u.setPassword(Encryptor.encrypte(password));
         u.setRole(role);
 
         if(UtilisateurDAO.insertUtilisateur(u)!=null){
@@ -228,7 +229,7 @@ public class MasterAdminController {
             return "redirect:/admin/";
         }
 
-        u.setPassword(password);
+        u.setPassword(Encryptor.encrypte(password));
 
         if(UtilisateurDAO.updateUtilisateur(u)!=null){
             request.getSession().setAttribute("success","Mot de passe changé avec succès");

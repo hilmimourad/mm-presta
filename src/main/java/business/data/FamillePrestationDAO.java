@@ -35,7 +35,10 @@ public abstract class FamillePrestationDAO {
 			DAO.getEntityManager().getTransaction().commit();
 			return FP.getId()+"";
 		}catch(Exception e){
-			DAO.getEntityManager().getTransaction().rollback();
+			if(DAO.getEntityManager().getTransaction().isActive()){
+				DAO.getEntityManager().getTransaction().rollback();
+			}
+
 			ExceptionHandler.handleException("Exception while inserting FamillePrestation",e);
 			return null;
 		}
@@ -61,7 +64,9 @@ public abstract class FamillePrestationDAO {
             DAO.getEntityManager().getTransaction().commit();
             return FPU.getId()+"";
 		} catch (Exception e) {
-			DAO.getEntityManager().getTransaction().rollback();
+			if(DAO.getEntityManager().getTransaction().isActive()){
+				DAO.getEntityManager().getTransaction().rollback();
+			}
 	        ExceptionHandler.handleException("Exception while updating FamillePrestation",e);
 	        return null;		}
 	}
@@ -78,12 +83,18 @@ public abstract class FamillePrestationDAO {
 			DAO.getEntityManager().getTransaction().begin();
 			FamillePrestation FP = DAO.getEntityManager().find(FamillePrestation.class, id);
 			if(FP!=null){
-			  DAO.getEntityManager().remove(DAO.getEntityManager().contains(FP)?FP:DAO.getEntityManager().merge(FP));
+			  if(FP.getFamillemere()!=null){
+				  	FP.setFamillemere(null);
+					DAO.getEntityManager().persist(FP);
+					DAO.getEntityManager().getTransaction().commit();
+					DAO.getEntityManager().getTransaction().begin();
+				}
+				if(DAO.getEntityManager().contains(FP))  DAO.getEntityManager().remove(FP);
 			}
 			DAO.getEntityManager().getTransaction().commit();
 			return true;
 		}catch(Exception e){
-			DAO.getEntityManager().getTransaction().rollback();
+			if(DAO.getEntityManager().getTransaction().isActive()) DAO.getEntityManager().getTransaction().rollback();
 			ExceptionHandler.handleException("Exception while deleting FamillePrestation",e);
 			return false;
 		}

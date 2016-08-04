@@ -53,7 +53,7 @@ public class CaracteristiqueProduit implements Serializable{
 		this.description = description;
 	}
 
-    @ManyToOne(cascade=CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.DETACH},fetch = FetchType.EAGER)
 	public TypeCaracteristiqueProduit getType() {
 		return type;
 	}

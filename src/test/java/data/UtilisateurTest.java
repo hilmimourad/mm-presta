@@ -53,4 +53,9 @@ public class UtilisateurTest {
 
 
     }
+
+    @Test
+    public void fetch(){
+        System.out.println(Encryptor.encrypte("admin"));
+    }
 }

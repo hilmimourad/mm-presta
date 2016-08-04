@@ -138,7 +138,7 @@ public class Utilisateurs {
      * la méthode
      */
     private ResponseEntity<String> persistService(int style,AuthCredentials credentials){
-
+        System.out.println("in persiste service");
         if (style!=_NEW_ONE && style!=_UPDATE_ROLE && style!=_UPDATE_PASSWORD && style!= _DELETE_ONE){
             throw new IllegalArgumentException("Illegal 'style' argument value");
         }
@@ -161,12 +161,18 @@ public class Utilisateurs {
             }
         }
 
-        if(style==_NEW_ONE) u = new Utilisateur();
+        if(style==_NEW_ONE){ u = new Utilisateur();}
         u.setUsername(credentials.getUsername());
-        if(style==_NEW_ONE || style==_UPDATE_PASSWORD) u.setPassword(Encryptor.encrypte(credentials.getPassword()));
-        if(style==_NEW_ONE || style==_UPDATE_ROLE) u.setRole(credentials.getRole());
+        if(style==_NEW_ONE || style==_UPDATE_PASSWORD){ u.setPassword(Encryptor.encrypte(credentials.getPassword()));}
+        if(style==_NEW_ONE || style==_UPDATE_ROLE){ u.setRole(credentials.getRole());}
+
+
 
         String result;
+        System.out.println();
+        System.out.println("IN Utilisateurs::Persist"+u.getPassword());
+        System.out.println();
+
         if(style==_NEW_ONE) result = UtilisateurDAO.insertUtilisateur(u);
         else result = UtilisateurDAO.updateUtilisateur(u);
 

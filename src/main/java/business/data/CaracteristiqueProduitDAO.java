@@ -34,7 +34,7 @@ public abstract class CaracteristiqueProduitDAO {
 			DAO.getEntityManager().getTransaction().commit();
 			return CP.getId()+"";
 		}catch(Exception e){
-			DAO.getEntityManager().getTransaction().rollback();
+			if(DAO.getEntityManager().getTransaction().isActive()) DAO.getEntityManager().getTransaction().rollback();
 			ExceptionHandler.handleException("Exception while inserting CaracteristiqueProduit",e);
 			return null;
 		}
@@ -58,7 +58,7 @@ public abstract class CaracteristiqueProduitDAO {
             DAO.getEntityManager().getTransaction().commit();
             return CPU.getId()+"";
         } catch (Exception e) {
-            DAO.getEntityManager().getTransaction().rollback();
+			if(DAO.getEntityManager().getTransaction().isActive()) DAO.getEntityManager().getTransaction().rollback();
             ExceptionHandler.handleException("Exception while updating CaracteristiqueProduit",e);
             return null;
         }
@@ -81,7 +81,7 @@ public abstract class CaracteristiqueProduitDAO {
 			DAO.getEntityManager().getTransaction().commit();
 			return true;
 		}catch(Exception e){
-			DAO.getEntityManager().getTransaction().rollback();
+			if(DAO.getEntityManager().getTransaction().isActive()) DAO.getEntityManager().getTransaction().rollback();
 			ExceptionHandler.handleException("Exception while deleting CaracteristiqueProduit",e);
 			return false;
 		}
