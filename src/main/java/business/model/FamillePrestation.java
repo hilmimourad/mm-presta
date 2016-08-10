@@ -31,6 +31,7 @@ public class FamillePrestation implements Serializable {
     private FamillePrestation famillemere;
     @JsonIgnore
     private List<FamillePrestation> listeSousFamille = new ArrayList<FamillePrestation>();
+    @JsonIgnore
     private List<Produit> listeProduit = new ArrayList<Produit>();
     public FamillePrestation() {
         super();
@@ -78,6 +79,7 @@ public class FamillePrestation implements Serializable {
         this.listeSousFamille = listeSousFamille;
     }
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn
     public List<Produit> getListeProduit() {

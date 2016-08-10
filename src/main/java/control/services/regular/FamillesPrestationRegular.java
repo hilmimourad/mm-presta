@@ -24,7 +24,6 @@ public class FamillesPrestationRegular {
 
     @RequestMapping(value = "/create.do",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createOne(@RequestBody FamillePrestation famille){
-        System.out.println("here))))))))))))))))))))))))");
         return persistService(_CREATE_ONE,famille);
     }
 

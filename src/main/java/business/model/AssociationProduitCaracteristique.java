@@ -1,6 +1,7 @@
 package business.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class AssociationProduitCaracteristique implements Serializable{
 	private float valeurMin;
 	private float valeurDefaut;
 	private float tarif;
+	@JsonIgnore
 	private Produit produit;
 	private CaracteristiqueProduit caracteristiqueProduit;
 
@@ -81,6 +83,7 @@ public class AssociationProduitCaracteristique implements Serializable{
 		this.caracteristiqueProduit = caracteristiqueProduit;
 	}
 
+	@JsonIgnore
 	@ManyToOne(cascade=CascadeType.MERGE,fetch = FetchType.EAGER)
 	public Produit getProduit() {
 		return produit;

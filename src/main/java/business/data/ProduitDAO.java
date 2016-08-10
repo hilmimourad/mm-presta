@@ -125,7 +125,7 @@ public abstract class ProduitDAO {
 	public synchronized static List<Produit> getAllOfFamille(String famille){
 		try {
 			Query query = DAO.getEntityManager().createQuery("select P from Produit P where P.famille.id = :id",Produit.class);
-			query.setParameter("id",famille);
+			query.setParameter("id",Long.parseLong(famille));
 			return query.getResultList();
 		} catch (Exception e) {
 			ExceptionHandler.handleException("Exception while fetching all Produit of Famille",e);
